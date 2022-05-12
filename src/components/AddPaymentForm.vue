@@ -33,9 +33,7 @@ export default {
         }
     },
     methods: {
-        show(){
-            this.isElVisible = !this.isElVisible
-        },
+       
         onClickSave(){
             const data = {
                 date: this.date || this.getCurrentDate,
