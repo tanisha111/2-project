@@ -3,7 +3,7 @@
     <div class="form" v-if="isElVisible">
     <input v-model="date" placeholder="date"/>
      <input v-model="category" placeholder="category"/>
-      <input v-model="value" placeholder="value"/>
+      <input v-model.number="value" placeholder="value"/>
       </div>
       <button @click="onClickSave">Save</button>   
       <button @click="show">Add new coast +</button> 
@@ -18,7 +18,7 @@ export default {
         isElVisible: true,
         date: "",
         category: "",
-        value: ""
+        value: ''
     }
     },
     computed: {
@@ -41,8 +41,9 @@ export default {
                 category: this.category,
                 value: this.value
             }
-            this.$emit('addNewPayment', data)
-            console.log(data);
+            this.$store.commit('addDataToPaymentsList', data)
+            //this.$emit('addNewPayment', data)
+            //console.log(data);
         }
     },
 }
