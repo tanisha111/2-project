@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HomeView msg="Privet"/>
+  <HomeView msg="Privet"/>
   </div>
 </template>
 
