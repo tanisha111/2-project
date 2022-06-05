@@ -5,42 +5,58 @@
     <div>Total price = {{getFullPaymentsValue}}</div>
   </header>
   <main>
-    <PaymentDisplay :items ="getPaymentsList"/>
+    
     <AddPaymentForm />
+    <PaymentDisplay :items ="currentElements"/>
+    <MyPagination :cur="cur" :length="12" :n="n" @changePage="changePage"/>
+    
   </main>
 
 </div>
   
 </template>
 <script>
-import PaymentDisplay from "./PaymentDisplay.vue";
 import AddPaymentForm from "./AddPaymentForm.vue";
+import PaymentDisplay from "./PaymentDisplay.vue";
+
 import { mapMutations, mapGetters } from "vuex";
+import MyPagination from "./MyPagination.vue";
+
 export default {
   name: "HomeView",
   components: {
-    PaymentDisplay,
     AddPaymentForm,
-  },
+    PaymentDisplay,
+    MyPagination
+},
   data() {
     return {
-     // paymentList: []
+     cur: 1,
+     n: 3,
+
     };
   },
   computed: {
     ... mapGetters (['getFullPaymentsValue', 'getPaymentsList']),
-    //в другом месте? getFPV() {
-      //return this.$store.getters.getFullPaymentsValue
-   // }
+    currentElements(){
+      return this.getPaymentsList.slice(this.n * (this.cur - 1), this.n * (this.cur - 1) + this.n)
+    }
   },
   methods: {
+    
+    
     ... mapMutations ([
       'setPaymentsListData'
     ]),
     addPaymentData(data) {
       this.paymentList.push(data)
     },
-    ///fetchData() {
+    changePage(p) {
+      this.cur = p
+      this.$store.dispatch('fetchData', p)
+   
+    }
+        ///fetchData() {
       ////return [
       ///  {
        ///   date: '28.03.2020',
@@ -60,12 +76,14 @@ export default {
      // ]
    // },
   },
-  async created () {
-    //this.paymentList = this.fetchData()
-    this.setPaymentsListData(this.fetchData())
-   //this.$store.commit('setPaymentsListData', this.fetchData())
+  created() {
+  this.$store.dispatch('fetchData', this.cur)
+    
   },
-}
+  mounted() {
+
+  },
+};
 </script>
 <style lang='scss' module>
 .title {
