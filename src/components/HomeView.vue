@@ -8,7 +8,7 @@
     
     <AddPaymentForm />
     <PaymentDisplay :items ="currentElements"/>
-    <MyPagination :cur="cur" :length="12" :n="n" @changePage="changePage"/>
+    <MyPagination :cur= "cur" :length="getPaymentsList.length" :n="n" @changePage="changePage"/>
     
   </main>
 
@@ -53,37 +53,20 @@ export default {
     },
     changePage(p) {
       this.cur = p
-      this.$store.dispatch('fetchData', p)
-   
-    }
-        ///fetchData() {
-      ////return [
-      ///  {
-       ///   date: '28.03.2020',
-        ///  category: 'Food',
-        ///  value: '169',
-       /// },
-       //// {
-        //  date: '24.03.2020',
-        //  category: 'Transport',
-         /// value: '360',
-       // },
-       /// {
-       //   date: '24.03.2020',
-       //   category: 'Food',
-       //   value: '532',
-      //  },
-     // ]
-   // },
+      }
+
+        
   },
   created() {
-  this.$store.dispatch('fetchData', this.cur)
+  this.$store.dispatch('fetchData')
     
   },
   mounted() {
-
+    
+ // if(!this.$route.params ?.page || isNaN(this.$route.params.page))
+//this.cur = Number(this.$route.params.page)
   },
-};
+}
 </script>
 <style lang='scss' module>
 .title {
