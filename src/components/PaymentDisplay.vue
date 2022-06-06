@@ -1,7 +1,10 @@
 <template>
 <div class="paymentList">
 <div class="paymentItem" v-for="(item, index) in items" :key="index">
-    {{ items }}
+    {{ items  }}
+</div>
+<div class="fpv" >
+    {{ getFullPaymentsValue }}
 </div>
  </div>   
 </template>
@@ -13,6 +16,11 @@ export default {
             type: Array,
             default: ()=>[],
         }
+    },
+    computed: {
+        getFullPaymentsValue() {
+            return this.$store.getters.getFullPaymentsValue
+        }        
     },
 }
     

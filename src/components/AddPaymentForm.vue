@@ -3,8 +3,11 @@
    <div class="form-wrapper">
     <div class="form" v-if="isElVisible">
     <input v-model="date" placeholder="date"/>
-     <input v-model="category" placeholder="category"/>
-      <input v-model="value" placeholder="value"/>
+    <select v-model="category" v-if="categoryList">
+    <option v-for="(value, idx) in categoryList" :key="idx">{{value}}</option>
+    </select>
+
+      <input v-model.number="value" placeholder="value"/>
       </div>
       <button @click="onClickSave">Save</button>   
       <button @click="show">Add new coast +</button> 
@@ -30,6 +33,9 @@ export default {
             const y = today.getFullYear();
             return `${d}.${m}.${y}`
 
+        },
+        categoryList(){
+            return this.$store.getters.getCategoryList
         }
     },
     methods: {
@@ -40,9 +46,26 @@ export default {
                 category: this.category,
                 value: this.value
             }
-            this.$emit('addNewPayment', data)
-            console.log(data);
+            this.$store.commit('addDataToPaymentsList', data)
+            //this.$emit('addNewPayment', data)
+            //console.log(data);
         }
+    },
+    async created() {
+        await this.$store.dispatch('fetchCategoryList')
+    },
+    mounted() {
+        const {category, section} = this.$route.params
+    if(!category || !section) {
+      return
+    }
+    this.category = category
+    const {value} = this.$route.query
+    if(!value) return
+    this.value = value
+    if(this.value && this.category) {
+        this.onClickSave()
+    }
     },
 }
 </script>

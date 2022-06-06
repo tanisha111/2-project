@@ -1,17 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HomeView msg="Privet"/>
+    <nav>
+      <div class="clickItem" @click="goToAboutPage"></div>
+      <span>
+        goToAbout
+        </span>
+      <router-link :to="{name: 'Dashboard', params: {page: '1'}}">Dashboard</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/notfound">NotFound</router-link> |
+      <router-link to="/addpayment">AddPayment</router-link> |
+      
+    </nav>
+    <router-view/>
   </div>
 </template>
-
 <script>
-import HomeView from './components/HomeView.vue'
 export default {
-  name: 'App',
-components: {
-  HomeView,
-}
+  methods: {
+    goToAboutPage(){
+      this.$router.push({
+        name: "Dashboard",
+        params: {
+          page: "3"
+        }
+      })
+    },
+  }
 }
 </script>
 
@@ -22,6 +36,18 @@ components: {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>
