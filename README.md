@@ -1,4 +1,4 @@
-# 2-project
+# gb-lesson
 
 ## Project setup
 ```
